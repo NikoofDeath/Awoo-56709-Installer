@@ -1,7 +1,7 @@
 # Awoo 56709 Installer
 A No-Bullshit NSP, NSZ, XCI, and XCZ Installer for Nintendo Switch, with anti-SXOS code and 2hus removed
 
-![Awoo 56709 Installer Main Menu](https://i.imgur.com/armPAIU.jpg)
+![Awoo 56709 Installer Main Menu](https://files.catbox.moe/bdojsd.jpg)
 
 ## Features
 - Installs NSP/NSZ/XCI/XCZ files and split NSP/XCI files from your SD card
