@@ -19,6 +19,7 @@ Because Goldleaf tends to not "Just werk" when installing NSP files. I wanted a 
 If you want to do other things like manage installed tickets, titles, and user accounts, check out [Goldleaf](https://github.com/XorTroll/Goldleaf)!
 
 ## Thanks to
+- Huntereb for the original Awoo Installer
 - HookedBehemoth for A LOT of contributions
 - Adubbz and other contributors for [Tinfoil](https://github.com/Adubbz/Tinfoil)
 - XorTroll for [Plutonium](https://github.com/XorTroll/Plutonium) and [Goldleaf](https://github.com/XorTroll/Goldleaf)
