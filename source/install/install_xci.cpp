@@ -20,7 +20,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#include <thread>
 
 #include "install/install_xci.hpp"
 #include "util/file_util.hpp"
@@ -29,7 +28,6 @@ SOFTWARE.
 #include "util/error.hpp"
 #include "util/config.hpp"
 #include "util/crypto.hpp"
-#include "util/util.hpp"
 #include "util/lang.hpp"
 #include "install/nca.hpp"
 #include "ui/MainApplication.hpp"
@@ -112,9 +110,7 @@ namespace tin::install::xci
 
             if (!Crypto::rsa2048PssVerify(&header->magic, 0x200, header->fixed_key_sig, Crypto::NCAHeaderSignature))
             {
-                std::thread audioThread(inst::util::playAudio,"romfs:/audio/bark.wav");
                 int rc = inst::ui::mainApp->CreateShowDialog("inst.nca_verify.title"_lang, "inst.nca_verify.desc"_lang, {"common.cancel"_lang, "inst.nca_verify.opt1"_lang}, false);
-                audioThread.join();
                 if (rc != 1)
                     THROW_FORMAT(("inst.nca_verify.error"_lang + tin::util::GetNcaIdString(ncaId)).c_str());
                 m_declinedValidation = true;

@@ -23,7 +23,6 @@ SOFTWARE.
 #include "install/install_nsp.hpp"
 
 #include <machine/endian.h>
-#include <thread>
 
 #include "install/nca.hpp"
 #include "nx/fs.hpp"
@@ -34,7 +33,6 @@ SOFTWARE.
 #include "util/title_util.hpp"
 #include "util/debug.h"
 #include "util/error.hpp"
-#include "util/util.hpp"
 #include "util/lang.hpp"
 #include "ui/MainApplication.hpp"
 
@@ -116,9 +114,7 @@ namespace tin::install::nsp
 
             if (!Crypto::rsa2048PssVerify(&header->magic, 0x200, header->fixed_key_sig, Crypto::NCAHeaderSignature))
             {
-                std::thread audioThread(inst::util::playAudio,"romfs:/audio/bark.wav");
                 int rc = inst::ui::mainApp->CreateShowDialog("inst.nca_verify.title"_lang, "inst.nca_verify.desc"_lang, {"common.cancel"_lang, "inst.nca_verify.opt1"_lang}, false);
-                audioThread.join();
                 if (rc != 1)
                     THROW_FORMAT(("inst.nca_verify.error"_lang + tin::util::GetNcaIdString(ncaId)).c_str());
                 m_declinedValidation = true;

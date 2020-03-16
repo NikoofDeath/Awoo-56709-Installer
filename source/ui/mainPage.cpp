@@ -66,9 +66,6 @@ namespace inst::ui {
         this->exitMenuItem = pu::ui::elm::MenuItem::New("main.menu.exit"_lang);
         this->exitMenuItem->SetColor(COLOR("#FFFFFFFF"));
         this->exitMenuItem->SetIcon("romfs:/images/icons/exit-run.png");
-        if (std::filesystem::exists(inst::config::appDir + "/awoo_main.png")) this->awooImage = Image::New(410, 190, inst::config::appDir + "/awoo_main.png");
-        else this->awooImage = Image::New(410, 190, "romfs:/images/awoos/5bbdbcf9a5625cd307c9e9bc360d78bd.png");
-        this->eggImage = Image::New(410, 190, "romfs:/images/awoos/a8cb40e465dadaf9708c9b1896777ce6.png");
         this->Add(this->topRect);
         this->Add(this->botRect);
         this->Add(this->titleImage);
@@ -81,10 +78,6 @@ namespace inst::ui {
         this->optionMenu->AddItem(this->settingsMenuItem);
         this->optionMenu->AddItem(this->exitMenuItem);
         this->Add(this->optionMenu);
-        this->Add(this->awooImage);
-        this->Add(this->eggImage);
-        this->awooImage->SetVisible(!inst::config::gayMode);
-        this->eggImage->SetVisible(false);
         this->AddThread(mainMenuThread);
     }
 
@@ -154,14 +147,6 @@ namespace inst::ui {
                 default:
                     break;
             }
-        }
-        if (Down & KEY_X) {
-            this->awooImage->SetVisible(false);
-            this->eggImage->SetVisible(true);
-        }
-        if (Up & KEY_X) {
-            this->eggImage->SetVisible(false);
-            if (!inst::config::gayMode) this->awooImage->SetVisible(true);
         }
     }
 }

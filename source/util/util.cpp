@@ -18,8 +18,6 @@
 
 namespace inst::util {
     void initApp () {
-        // Seethe
-        if (!pu::IsReiNX()) pu::IsAtmosphere();
         if (!std::filesystem::exists("sdmc:/switch")) std::filesystem::create_directory("sdmc:/switch");
         if (!std::filesystem::exists(inst::config::appDir)) std::filesystem::create_directory(inst::config::appDir);
         inst::config::parseConfig();
@@ -263,41 +261,10 @@ namespace inst::util {
         usbDsGetState(&usbState);
         return usbState;
     }
-
-    void playAudio(std::string audioPath) {
-        int audio_rate = 22050;
-        Uint16 audio_format = AUDIO_S16SYS;
-        int audio_channels = 2;
-        int audio_buffers = 4096;
-
-        if(Mix_OpenAudio(audio_rate, audio_format, audio_channels, audio_buffers) != 0) return;
-
-        Mix_Chunk *sound = NULL;
-        sound = Mix_LoadWAV(audioPath.c_str());
-        if(sound == NULL) {
-            Mix_FreeChunk(sound);
-            Mix_CloseAudio();
-            return;
-        }
-
-        int channel = Mix_PlayChannel(-1, sound, 0);
-        if(channel == -1) {
-            Mix_FreeChunk(sound);
-            Mix_CloseAudio();
-            return;
-        }
-
-        while(Mix_Playing(channel) != 0);
-
-        Mix_FreeChunk(sound);
-        Mix_CloseAudio();
-
-        return;
-    }
     
    std::vector<std::string> checkForAppUpdate () {
         try {
-            std::string jsonData = inst::curl::downloadToBuffer("https://api.github.com/repos/Huntereb/Awoo-Installer/releases/latest", 0, 0, 1000L);
+            std::string jsonData = inst::curl::downloadToBuffer("https://api.github.com/repos/NikoofDeath/Awoo-56709-Installer/releases/latest", 0, 0, 1000L);
             if (jsonData.size() == 0) return {};
             nlohmann::json ourJson = nlohmann::json::parse(jsonData);
             if (ourJson["tag_name"].get<std::string>() != inst::config::appVersion) {

@@ -26,7 +26,6 @@ SOFTWARE.
 #include <fcntl.h>
 #include <sstream>
 #include <curl/curl.h>
-#include <thread>
 #include <switch.h>
 #include "netInstall.hpp"
 #include "install/install_nsp.hpp"
@@ -163,9 +162,7 @@ namespace netInstStuff{
             fprintf(stdout, "%s", e.what());
             inst::ui::instPage::setInstInfoText("inst.info_page.failed"_lang + urlNames[urlItr]);
             inst::ui::instPage::setInstBarPerc(0);
-            std::thread audioThread(inst::util::playAudio,"romfs:/audio/bark.wav");
             inst::ui::mainApp->CreateShowDialog("inst.info_page.failed"_lang + urlNames[urlItr] + "!", "inst.info_page.failed_desc"_lang + "\n\n" + (std::string)e.what(), {"common.ok"_lang}, true);
-            audioThread.join();
             nspInstalled = false;
         }
 
@@ -183,10 +180,8 @@ namespace netInstStuff{
         if(nspInstalled) {
             inst::ui::instPage::setInstInfoText("inst.info_page.complete"_lang);
             inst::ui::instPage::setInstBarPerc(100);
-            std::thread audioThread(inst::util::playAudio,"romfs:/audio/awoo.wav");
             if (ourUrlList.size() > 1) inst::ui::mainApp->CreateShowDialog(std::to_string(ourUrlList.size()) + "inst.info_page.desc0"_lang, Language::GetRandomMsg(), {"common.ok"_lang}, true);
             else inst::ui::mainApp->CreateShowDialog(urlNames[0] + "inst.info_page.desc1"_lang, Language::GetRandomMsg(), {"common.ok"_lang}, true);
-            audioThread.join();
         }
         
         LOG_DEBUG("Done");
